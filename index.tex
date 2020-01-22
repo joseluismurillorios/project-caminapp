@@ -1,0 +1,150 @@
+\documentclass[12pt]{report}
+
+\usepackage{graphicx}
+\usepackage[spanish,mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{jslisting}
+\usepackage{jslistings}
+
+\usepackage[acronym, toc]{glossaries}
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+\graphicspath{ {./images/} }
+
+\renewcommand{\glstextformat}[1]{\textit{#1}}
+\makeglossaries
+\input{glossary.tex}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{0in}
+% \setlength{\voffset}{0.5in}
+\setlength{\voffset}{0in}
+\setlength{\headheight}{0.25in}
+\setlength{\headsep}{0.5in}
+\setlength{\hoffset}{0.5in}
+% \setlength{\textheight}{8in}
+\setlength{\textwidth}{5.5in}
+\setlength{\topskip}{0in}
+\setlength{\footskip}{1in}
+\setlength{\parskip}{2ex}
+
+\definecolor{codegray}{gray}{0.5}
+\definecolor{codebox}{gray}{0.95}
+\newcommand{\code}[1]{\colorbox{codebox}{\textcolor{codegray}{\texttt{#1}}}}
+
+\title{
+   {“Diseño y desarrollo de Caminapp.”}\\
+   {\large INSTITUTO METROPOLITANO DE PLANEACIÓN}\\
+   {\includegraphics{escudo1.png}}
+}
+\author{José Luis Murillo Ríos}
+\date{21 DE AGOSTO DEL 2019}
+
+% \fancyhead{}
+% \fancyfoot{}
+% \renewcommand{\headrulewidth}{0pt}
+% \fancyhead[RO,LE]{\footnotesize\thepage}
+% \fancyhead[RE]{\footnotesize\slshape\leftmark}
+
+% \fancyhead{\fontsize{8}{10}\selectfont\nouppercase\rightmark}
+\newcommand{\changefont}{\fontsize{10}{12}\selectfont}
+
+\fancyhf{}
+
+\fancyhead[L]{\changefont \slshape \nouppercase\leftmark}
+\fancyfoot[R]{\changefont \slshape \thepage}
+% \fancyfoot[L]{\changefont \slshape \nouppercase\rightmark}
+
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\pagestyle{fancy}
+
+% \rhead{\leftmark}
+% \cfoot{\thepage}
+
+\begin{document}
+\setcounter{page}{1}
+\pagenumbering{roman}
+\thispagestyle{empty}
+\begin{center}
+   INSTITUTO METROPOLITANO DE PLANEACIÓN\\[0.75cm]
+\end{center}
+\begin{figure}[h]
+\begin{center}
+
+% \includegraphics[height=5.5 cm]{escudo1.png}
+\vspace{0cm}
+\end{center}
+\end{figure}
+\vspace{1cm}
+\begin{center}
+DISEÑO Y DESARROLLO DE CAMINAPP\\[4mm]
+POR\\[4mm]
+JOSÉ LUIS MURILLO RÍOS\\[1cm]
+\vfill
+TIJUANA, B.C. \hfill AGOSTO 2019
+\end{center}
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+DISEÑO Y DESARROLLO DE CAMINAPP\\[1.3cm]
+POR\\[0.8cm]
+JOSÉ LUIS MURILLO RÍOS\\[0.8cm]
+\small AGOSTO 2019\\[0.7cm]
+\end{center}
+
+% \chapter*{RESUMEN}
+\newpage
+\input{chapters/abstract}
+ 
+\newpage
+\tableofcontents
+
+\newpage
+\listoftables
+\addcontentsline{toc}{chapter}{Índice de Tablas} %%% Para introducir una línea en el índice
+\listoffigures
+\addcontentsline{toc}{chapter}{Índice de Figuras}
+\lstlistoflistings
+
+\chapter{Introducción}
+\input{chapters/chapter01/intro}
+
+\section{Antecedentes y definición del problema}
+\input{chapters/chapter01/background}
+
+\section{Propuesta de solución}
+\input{chapters/chapter01/proposal}
+
+\section{Objetivos generales}
+\input{chapters/chapter01/general}
+
+\section{Objetivos específicos}
+\input{chapters/chapter01/specific}
+
+
+\chapter{Marco teórico}
+\input{chapters/chapter02/intro}
+
+\chapter{Análisis y diseño del sistema}
+\input{chapters/chapter03/intro}
+
+\chapter{Conclusiones}
+\input{chapters/conclusions}
+
+\printbibliography
+
+\printglossary
+
+\clearpage
+
+\printglossary[type=\acronymtype]
+
+\end{document}
