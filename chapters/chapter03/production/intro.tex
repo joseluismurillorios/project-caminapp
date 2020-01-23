@@ -6,7 +6,7 @@ Hacer que las aplicaciones de Node.js estén listas para producción es probable
   \item Servidor CentOS 7 con Node.js y Git instalado.
   \item Al menos 512 Mb de RAM y 15 Gb de espacio libre en disco.
   \item Acceso de usuario root a través de SSH.
-  \item Un nombre de dominio apuntado a la dirección IP del servidor (rosesland.app)
+  \item Un nombre de dominio apuntado a la dirección IP del servidor (caminapp.app)
   % \item Editor de texto nano, puede instalarse con este comando:\\
   
   % \code{yum install nano}
@@ -37,7 +37,7 @@ Al utilizar Git, el flujo de trabajo generalmente se dirige solo al control de v
 Para poder empujar cambios a nuestro repositorio remoto se debe establecer la siguiente estructura:
 
 \begin{itemize}
-  \item Directorio publico del servidor: /var/www/rosesland.app
+  \item Directorio publico del servidor: /var/www/caminapp.app
   \item Directorio del repositorio del servidor: /var/repo/site.git
 \end{itemize}
 
@@ -65,18 +65,18 @@ Se crea el archivo post-recepción escribiendo:\\
 Al ejecutar este comando, se muestra una línea en blanco que indica que todo lo que escriba se guardará en este archivo. Se debe agregar lo siguiente:\\
 \\
 \code{\#!/bin/sh}\\
-\code{git --work-tree=/var/www/rosesland.app --git-dir=/var/repo/site.git checkout -f}\\
+\code{git --work-tree=/var/www/caminapp.app --git-dir=/var/repo/site.git checkout -f}\\
 \\
 Al terminar, se presiona `control-d' para guardar. Para ejecutar el archivo, se necesita establecer los permisos adecuados usando:\\
 \\
 \code{chmod +x post-receive}\\
 \\
-El archivo post-recepción se examina cada vez que se completa un envío y coloca los archivos en \code{/var/www/rosesland.app}, esto permite actualizaciones directas del proyecto facilitando el mantenimiento de codigo y evitando la tarea de tener que conectarse al servidor para cargar los archivos manualmente.
+El archivo post-recepción se examina cada vez que se completa un envío y coloca los archivos en \code{/var/www/caminapp.app}, esto permite actualizaciones directas del proyecto facilitando el mantenimiento de codigo y evitando la tarea de tener que conectarse al servidor para cargar los archivos manualmente.
 \vspace{0.8cm}
 
 En el repositorio local se necesita configurar la ruta del repositorio remoto. Se le dice Git que agregue un control remoto llamado `live':\\
 \\
-\code{git remote add live ssh://root@rosesland.app/var/repo/site.git}\\
+\code{git remote add live ssh://root@caminapp.app/var/repo/site.git}\\
 \\
 Con esto es posible empujar cambios en el repositorio al servidor remoto usando el alias `live':\\
 \\
@@ -156,16 +156,16 @@ http {
 Para finalizar se procede a utilizar el modulo npm llamado `nginx-generator' para generar los archivos que le indican a nginx que actúe como un proxy inverso. En la linea de comandos se escribe lo siguiente:\\
 \\
 \code{nginx-generator \symbol{92}}\\
-\code{        ---name rosesland \symbol{92}}\\
-\code{        ---domain http://rosesland.app \symbol{92}}\\
+\code{        ---name caminapp \symbol{92}}\\
+\code{        ---domain http://caminapp.app \symbol{92}}\\
 \code{        ---type proxy \symbol{92}}\\
 \code{        ---var host=localhost \symbol{92}}\\
 \code{        ---var port=3000 \symbol{92}}\\
-\code{        /etc/nginx/sites-enabled/rosesland.app.conf}\\
+\code{        /etc/nginx/sites-enabled/caminapp.app.conf}\\
 \\
 Este comando crea un archivo llamado \code{site\_nginx} y lo coloca dentro del directorio \code{/etc/nginx/sites-enabled/}. El archivo se puede observar con el siguiente comando:\\
 \\
-\code{sudo nano /etc/nginx/sites-enabled/rosesland.app.conf}\\
+\code{sudo nano /etc/nginx/sites-enabled/caminapp.app.conf}\\
 \\
 Por ultimo se reinicia nginx:\\
 \\
@@ -181,7 +181,7 @@ PM2 se instala mediante npm con el siguiente comando:\\
 \\
 Una vez instalado sera posible ejecutar la aplicación con PM2:\\
 \\
-\code{pm2 start /var/www/rosesland.app/index.js ---name rosesland}\\
+\code{pm2 start /var/www/caminapp.app/index.js ---name caminapp}\\
 
 \begin{figure}[H]
   \centering
@@ -208,3 +208,72 @@ Cuando se instalan certificados por primera vez, Certbot pide una dirección de 
 \vspace{0.8cm}
 
 En este momento se cuenta con una aplicación Node.js ejecutándose como un servicio en segundo plano en un entorno de producción, utilizando el protocolo HTTPS por seguridad y nginx como proxy inverso.
+
+
+\subsubsection{Apache Cordova}
+Apache Cordova es un marco de desarrollo móvil de código abierto. Le permite utilizar tecnologías web estándar: HTML5, CSS3 y JavaScript para el desarrollo multiplataforma. Las aplicaciones se ejecutan dentro de contenedores dirigidos a cada plataforma, y se basan en enlaces API que cumplen con los estándares para acceder a las capacidades de cada dispositivo, como sensores, datos, estado de la red, etc. Sus principales funciones engloban \ref{cordova}:
+
+\begin{enumerate}
+  \item Extender una aplicación en más de una plataforma, sin tener que volver a implementarla con el conjunto de herramientas y lenguaje de cada plataforma.
+  \item Implementar una aplicación web que está empaquetada para su distribución en varios portales de la tienda de aplicaciones.
+  \item Mezclar componentes de aplicaciones nativas con un WebView (ventana de navegador especial) que puede acceder a las API a nivel de dispositivo, o si desea desarrollar una interfaz de complemento entre los componentes nativos y WebView.
+\end{enumerate}
+
+\subsubsection{Crear una aplicación Cordova}
+La herramienta de línea de comandos Cordova se distribuye como un paquete npm. Para instalar la herramienta de línea de comandos cordova, se siguen estos pasos:
+
+\begin{enumerate}
+  \item Descargar e instalar Node.js. En la instalación, debería poder invocar node y npm en la línea de comando.
+  \item (Opcional) Descargar e instalar un cliente git, si aún no tiene uno. Después de la instalación, se debería poder invocar git en la línea de comando. La CLI se usa para descargar activos cuando se hace referencia a ellos utilizando una url a un repositorio git.
+  \item Instalar el módulo cordova usando la utilidad npm de Node.js. La utilidad npm descargará automáticamente el módulo cordova.
+\end{enumerate}
+
+En OS X y Linux:
+
+\code{sudo npm install -g cordova}\\
+
+En OS X y Linux, puede ser necesario agregar el comando \code{npm} con \code{sudo} para instalar esta utilidad de desarrollo en directorios restringidos como \code{/usr/local/share}. Si se utiliza la herramienta opcional \code{nvm} o se tiene acceso de escritura al directorio de instalación, se puede omitir el prefijo sudo.
+
+
+En Windows:
+
+\code{npm install -g cordova}
+El indicador \code{-g} anterior le dice a npm que instale cordova a nivel global. De lo contrario, se instalará en el subdirectorio node_modules del directorio de trabajo actual.
+
+\subsubsection{Crear la aplicación}
+En el folder donde se mantendrá el proyecto se ejecuta el siguiente comando:
+
+\code{cordova create caminapp com.example.caminapp Caminapp}
+
+Esto crea la estructura de directorios requerida para la aplicación cordova. Por defecto, el script de creación cordova genera una aplicación esquelética basada en la web cuya página de inicio es el archivo \code{www/index.html} del proyecto.
+
+\subsubsection{Agregar plataformas}
+Todos los comandos posteriores deben ejecutarse dentro del directorio del proyecto o en cualquier subdirectorio:
+
+\code{cd caminapp}
+
+Se agregan las plataformas a las que desea orientar la aplicación. Agregaremos la plataforma 'ios' y 'android' y nos aseguraremos de que se guarden en \code{config.xml} y \code{package.json}
+
+\code{cordova platform add ios}
+\code{cordova platform add android}
+
+\subsubsection{Instalar requisitos previos para construir}
+Para compilar y ejecutar aplicaciones, se deben instalar SDK para cada plataforma a la que desee apuntar. Alternativamente, si se está usando el navegador para el desarrollo, puede usar la plataforma del navegador que no requiere ningún SDK de plataforma.
+
+Para verificar si cumple con los requisitos para construir la plataforma:
+
+\code{cordova requirements}
+
+\subsubsection{Compilar}
+Ejecute el siguiente comando para generar el proyecto para todas las plataformas:
+\code{cordova build}
+Opcionalmente, se puede limitar el alcance de cada compilación a plataformas específicas: 'ios' en este caso:
+\code{cordova build ios}
+
+
+\subsubsection{Agregar Plugins}
+Se puede modificar la aplicación generada por defecto para aprovechar las tecnologías web estándar, pero para que la aplicación acceda a las funciones a nivel de dispositivo, deben agregar complementos.
+
+Un complemento expone una API de Javascript para la funcionalidad nativa del SDK. Los complementos generalmente se alojan en npm y puede buscarlos en la página de búsqueda de complementos. Algunas API clave son proporcionadas por el proyecto de código abierto Apache Cordova y se denominan API Core Plugin. Por ejemplo, para agregar y guardar el complemento de la cámara en config.xml y package.json, especificaremos el nombre del paquete npm para el complemento de la cámara:
+
+\code{cordova plugin add cordova-plugin-camera}

@@ -17,7 +17,7 @@ const serviceAccount = {
 
 const adminconfig = {
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://rosesland.firebaseio.com',
+  databaseURL: 'https://caminapp.firebaseio.com',
 };
 
 /**\textcolor{allcomment}{// Inicialización de Firebase.}  -*/

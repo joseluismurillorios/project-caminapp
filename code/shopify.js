@@ -3,7 +3,7 @@ const Shopify = require('shopify-api-node');
 
 /**\textcolor{allcomment}{// Iniciar conexión con Shopify. } -*/
 const shopify = new Shopify({
-  shopName: 'rosesland',
+  shopName: 'caminapp',
   apiKey: '<clave api>',
   password: '<palabra secreta>',
 });
